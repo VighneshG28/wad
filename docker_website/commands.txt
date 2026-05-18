@@ -1,0 +1,55 @@
+A. index.html (The Content)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Docker Web App</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; text-align: center; padding-top: 50px; }
+        .box { border: 1px solid #ccc; display: inline-block; padding: 20px; border-radius: 8px; background: white; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Static Site Running in Docker</h1>
+        <p>Managed via Standard Naming Conventions</p>
+    </div>
+</body>
+</html>
+
+
+
+B. Dockerfile (The Blueprint)
+
+# 1. Start from a base image (pre-installed Nginx on a tiny Linux)
+FROM nginx:alpine
+
+# 2. Copy the file from your PC to the container's web folder
+COPY index.html /usr/share/nginx/html/index.html
+
+# 3. Inform Docker that the container uses port 80
+EXPOSE 80
+
+
+2. Core Docker Commands
+
+Step 1: Build the Image
+
+docker build -t my-web-app:v1 .
+
+
+Step 2: Run the Container
+
+docker run -d -p 8080:80 --name my-web-app-container my-web-app:v1
+
+
+
+3. Management Command Summary
+
+docker ps                           -       Lists running containers and their names.
+docker logs my-web-app-container    -       Checks for errors if the site isn't loading.
+docker rmi my-web-app:v1            -       Deletes the blueprint from your machine.
+
+
+
