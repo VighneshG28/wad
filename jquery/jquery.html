@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"
+href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- Page 1 -->
+<div data-role="page" id="page1">
+
+  <div data-role="header">
+    <h1>User Form</h1>
+  </div>
+
+  <div class="ui-content">
+
+    <form id="myForm">
+
+      <input type="text" id="name" placeholder="Enter Name">
+
+      <input type="email" id="email" placeholder="Enter Email">
+
+      <input type="number" id="age" placeholder="Enter Age">
+
+      <button type="submit">Submit</button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<!-- Page 2 -->
+<div data-role="page" id="page2">
+
+  <div data-role="header">
+    <h1>User Data</h1>
+  </div>
+
+  <div class="ui-content">
+
+    <p id="result"></p>
+
+  </div>
+
+</div>
+
+<script>
+
+$("#myForm").submit(function(){
+
+  var name = $("#name").val();
+
+  var email = $("#email").val();
+
+  var age = $("#age").val();
+
+  $("#result").html(
+    "Name: " + name + "<br>" +
+    "Email: " + email + "<br>" +
+    "Age: " + age
+  );
+
+  $.mobile.changePage("#page2");
+
+  return false;
+
+});
+
+</script>
+
+</body>
+</html>

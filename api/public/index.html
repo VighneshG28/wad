@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CRUD App</title>
+</head>
+
+<body>
+
+    <h2>Add User</h2>
+
+    <input type="text" id="name" placeholder="Name">
+
+    <input type="email" id="email" placeholder="Email">
+
+    <input type="number" id="age" placeholder="Age">
+
+    <button onclick="addUser()">
+        Add User
+    </button>
+
+    <hr>
+
+    <button onclick="getUsers()">
+        Load Users
+    </button>
+
+    <div id="users"></div>
+
+<script>
+
+    async function addUser(){
+
+        await fetch("http://localhost:3000/add", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                name: document.getElementById("name").value,
+
+                email: document.getElementById("email").value,
+
+                age: document.getElementById("age").value
+            })
+        });
+
+        getUsers();
+    }
+
+    async function getUsers(){
+
+        const response = await fetch(
+            "http://localhost:3000/all"
+        );
+
+        const users = await response.json();
+
+        let data = "";
+
+        users.forEach(user => {
+
+            data += `
+
+                <p>
+
+                    ${user.name}
+                    ${user.email}
+                    ${user.age}
+
+                    <button onclick="deleteUser('${user._id}')">
+                        Delete
+                    </button>
+
+                    <button onclick="updateUser('${user._id}')">
+                        Update
+                    </button>
+
+                </p>
+
+            `;
+        });
+
+        document.getElementById("users").innerHTML = data;
+    }
+
+    async function deleteUser(id){
+
+        await fetch(
+            `http://localhost:3000/delete/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        getUsers();
+    }
+
+    async function updateUser(id){
+
+        const newName = prompt(
+            "Enter New Name"
+        );
+
+        await fetch(
+
+            `http://localhost:3000/update/${id}`,
+
+            {
+
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    name: newName
+                })
+            }
+        );
+
+        getUsers();
+    }
+
+</script>
+
+</body>
+</html>
